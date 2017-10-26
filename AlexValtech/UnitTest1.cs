@@ -28,10 +28,11 @@ namespace AlexValtech
         }
 
 
-        [TestCleanup()]
-        public void MyTestCleanup()
+        [ClassCleanup()]
+        public static void MyClassCleanup()
         {
             _driver.Quit();
+            _driver.Dispose();
         }
 
         [TestMethod]
@@ -76,7 +77,7 @@ namespace AlexValtech
 
         #region Private Methods
 
-            private IWebElement MenuItemsBylabel(string h1Label)
+        private IWebElement MenuItemsBylabel(string h1Label)
         {
             return _driver.FindElement(By.XPath(
                 $"//div//ul[@class='header__navigation__menu navigation__menu']/li//span[contains(text(),'{h1Label}')]"));
@@ -87,7 +88,7 @@ namespace AlexValtech
             return _driver.FindElement(By.XPath("//h1")).Text.Equals(text);
         }
 
-        public void WaitForElementToBeClickable(IWebElement ele, int timeoutInSeconds = 5)
+        private void WaitForElementToBeClickable(IWebElement ele, int timeoutInSeconds = 5)
         {
             try
             {
